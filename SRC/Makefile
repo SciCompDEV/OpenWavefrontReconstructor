@@ -1,7 +1,7 @@
 
 ###########################################################################################
 # COMPILERS OPTIONS
-CXX=g++   
+CXX=g++ 
 CXX:= ccache $(CXX)
 CXXFLAGS = -O3 -std=c++11 -g #-v 
 
@@ -18,19 +18,15 @@ HEADERS:=$(wildcard $(SRCDIR)/*.h)
 OBJECTS:=$(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(EXT)=.o))
 
 
-
 ###########################################################################################
 # -L: FOLDER LIBRARY
 #
-LFLAGS+=-L./lib  #/$(aw_path_extract_lib_dir) 
+LFLAGS+=-L./lib  
 LFLAGS+=-L/usr/lib
 
 # -l: LIBRARY 
 lLIBS+= -llog4cxx
-#lLIBS+= -l pthreads
-#lLIBS+=-lapr-1 -lpthread
-lLIBS+=-lpthread
-lLIBS+=-larmadillo
+lLIBS+= -larmadillo
 
 
 ###########################################################################################

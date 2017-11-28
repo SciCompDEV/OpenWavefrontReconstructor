@@ -1,5 +1,5 @@
 
-# Open Wavefront Reconstructor
+# Open Wavefront Reconstructor: 1.0.0
 
 
 ![Alt text](pics/OWR_a.png?raw=true "Title")
@@ -26,6 +26,8 @@ All software entities are fully decoupled, therefore **OWR** can be easily modif
 
 1. [ Introduction](#-introduction)
 2. [Architecture](#architecture)
+	1. [Work Flow](#work-flow)
+	2. [Uml](#uml)
 3. [ Installation](#-installation)
 	1. [ Dependencies](#-dependencies)
 	2. [ Build process](#-build-process)
@@ -33,7 +35,6 @@ All software entities are fully decoupled, therefore **OWR** can be easily modif
 	1. [ MockUp generator](#-mockup-generator)
 5. [ Contributing](#-contributing)
 6. [ FAQ](#-faq)
-
 
 ##  Introduction 
 A brief introduction to the mathematical background (intro+abstract of the paper), minimal number of equations.
@@ -62,7 +63,10 @@ UML.xmi
 
 ##  Installation 
 ###  Dependencies
-Blalba
+- The algebraic operations are implemented by means of the linear algebra library [armadillo](http://arma.sourceforge.net/).
+- The logging is performed by  [log4CXX](https://logging.apache.org/log4cxx/latest_stable/).
+- To 3D plot the final graphics the command-line driven graphing utility [Gnuplot](http://www.gnuplot.info/).
+ 
 ###  Build process 
 Blalba
 
