@@ -68,7 +68,8 @@ TARGET=all #####################################################################
 # make
 $(TARGET): $(OBJECTS)
 	$(info LINKING: $@) 
-	@$(CXX) -o $(BINDIR)/aw_$(sufix_1)_$(sufix_2)_$(sufix_3) $(OBJECTS) $(LFLAGS) $(lLIBS) $(SFLAGS) $(HLDFLAGS)  
+	@$(CXX) -o $(BINDIR)/OWR $(OBJECTS) $(LFLAGS) $(lLIBS) $(SFLAGS) $(HLDFLAGS)  
+	#@$(CXX) -o $(BINDIR)/OWR$(sufix_1)_$(sufix_2)_$(sufix_3) $(OBJECTS) $(LFLAGS) $(lLIBS) $(SFLAGS) $(HLDFLAGS)  
 
 ###########################################################################################
 $(BUILDDIR)/%.o : $(SRCDIR)/%.$(EXT)

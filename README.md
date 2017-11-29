@@ -23,18 +23,20 @@ All software entities are fully decoupled, therefore **OWR** can be easily modif
 
 ## Table of Contents
 
-
 1. [ Introduction](#-introduction)
 2. [Architecture](#architecture)
 	1. [Work Flow](#work-flow)
 	2. [Uml](#uml)
 3. [ Installation](#-installation)
 	1. [ Dependencies](#-dependencies)
-	2. [ Build process](#-build-process)
+	2. [ Build process and quick run](#-build-process-and-quick-run)
 4. [ Usage](#-usage)
-	1. [ MockUp generator](#-mockup-generator)
+	1. [Available runtime options through the custom parser](#available-runtime-options-through-the-custom-parser)
+	2. [ MockUp generator](#-mockup-generator)
+	3. [ Using external sensors](#-using-external-sensors)
 5. [ Contributing](#-contributing)
 6. [ FAQ](#-faq)
+
 
 ##  Introduction 
 A brief introduction to the mathematical background (intro+abstract of the paper), minimal number of equations.
@@ -67,15 +69,61 @@ UML.xmi
 - The logging is performed by  [log4CXX](https://logging.apache.org/log4cxx/latest_stable/).
 - To 3D plot the final graphics the command-line driven graphing utility [Gnuplot](http://www.gnuplot.info/).
  
-###  Build process 
-Blalba
+###  Build process and quick run
+
+To generate the executable in `SRC/bin`:
+
+```
+cd SRC
+make all
+```
+
+And to execute it: 
+
+```
+cd SRC/bin
+./OWR
+```
+
+Note that in the same folder `bin` are located: 
+- the configuration file for the logging facility: `Log4cxxConfig.xml`
+- the parser file with the available runtime options: `config.cfg`
+
 
 ##  Usage
+
+### Available runtime options through the custom parser
+
+
+The **OWR** executable 
+
+<!--generate_only = false-->
+<!--libtype = armadillo -->
+<!--mock_wave_front string = Circular; espherical -->
+<!--alfa integer =0-->
+
+<!--polynomialbasis = Zernike-->
+<!--polynomialorder=10 -->
+<!--gamma double = 2.2526-->
+<!--#simu string = Zernike ; espherical -->
+<!--setCon bool=1;-->
+
+| Parser var name| options | explanation |
+| ------------- |:-------------:| :-----|
+| libtype      | armadillo | the linear algebra library |
+| mock_wave_front      | Circular, espherical|   shape of simulated optical field |
+| gammba double | 2.2526 |   solano  |
+| polynomialbasis | Zernike |   solano  |
+| polynomialorder | 10 | order of the polynomial |
+| setCon | 1 or 0 | solano |
+
 ###  MockUp generator 
 
+###  Using external sensors
 
 ##  Contributing
-Blalba
+If you'd like to see support for more options, please create an issue or create a pull request. 
+If you'd like to discuss the project more directly, feel free to reach us out through the emails in the SciCompDEV organizational repository.
 
 ##  FAQ
 
