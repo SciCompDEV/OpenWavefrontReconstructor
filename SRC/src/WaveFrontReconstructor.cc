@@ -21,6 +21,7 @@ using namespace std;
 WavefrontReconstructor::WavefrontReconstructor(DATA* _data) {
    WFREC = make_unique<CLogging>( (char*)"Log4cxxConfig.xml","WFREC") ;
    WFREC->INFO((char *)"Building up WavefrontReconstructor  ");
+
     data=move(_data);
     N=J=0;
 
