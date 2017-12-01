@@ -62,7 +62,8 @@ int main() {
 
         // Building data -------------------------------------------------------
          
-        unique_ptr<DATA> input_data(new DATA(mock_type_wavefront, 30));
+        unique_ptr<DATA> input_data(new DATA(mock_type_wavefront));
+        //unique_ptr<DATA> input_data(new DATA(mock_type_wavefront, 30));
         // OR:
         //std::vector<double> x, y, z, dx, dy;
         //unique_ptr<DATA> input_data(new DATA(x, y, z, dx, dz ));
