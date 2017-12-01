@@ -32,7 +32,7 @@ int main() {
     string ttt;
     int pl_order;
     string pl_basis;
-    string mock_wave_front;
+    string mock_type_wavefront;
     int ret =-1;
 
     try {
@@ -56,12 +56,16 @@ int main() {
         if(!exists)  error_arguments("polynomialorder is missing");
         pl_order=cfg.getValueOfKey<int>("polynomialorder",10);
         
-        exists = cfg.keyExists("mock_wave_front");
-        if(!exists)  error_arguments("mock_wave_frontis missing");
-        mock_wave_front=cfg.getValueOfKey<string>("mock_wave_front","CircularTestF2");
+        exists = cfg.keyExists("mock_type_wavefront");
+        if(!exists)  error_arguments("mock_type_wavefrontis missing");
+        mock_type_wavefront=cfg.getValueOfKey<string>("mock_type_wavefront","CircularTestF2");
 
         // Building data -------------------------------------------------------
-        unique_ptr<DATA> input_data(new DATA(mock_wave_front, 30));
+         
+        unique_ptr<DATA> input_data(new DATA(mock_type_wavefront, 30));
+        // OR:
+        //std::vector<double> x, y, z, dx, dy;
+        //unique_ptr<DATA> input_data(new DATA(x, y, z, dx, dz ));
 
         // Buiding reconstructor -----------------------------------------------
         auto reconstructor = CFactory::make(pl_basis, pl_order, new MockWavefrontGenerator(std::move(input_data)));
