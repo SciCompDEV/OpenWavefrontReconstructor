@@ -91,7 +91,8 @@ void WavefrontReconstructor::ComputeCoefficients(void) {
 }
 
 // TODO: short description ...
-void WavefrontReconstructor::ComputeReconstructedWaveFront(const vector<double> &x, const vector<double> &y,const vector<double> &coeffs, vector<double> &z) {
+vector<double> WavefrontReconstructor::ComputeReconstructedWaveFront(const vector<double> &x, const vector<double> &y,const vector<double> &coeffs) {
+    vector<double> z; // TODO: this as a class member, to void continuous creation
     // TODO: reimplement timing, or change by runtime profiling
     clock_t c_init,c_end;
     c_init=clock();
@@ -118,6 +119,7 @@ void WavefrontReconstructor::ComputeReconstructedWaveFront(const vector<double> 
    for ( size_t i=0 ; i<nn ; ++i ) { z[i]=_phases[i]; }
    c_end=clock();
    cpuTimeSimpleReconstruction=double(c_end-c_init)/double(CLOCKS_PER_SEC);
+   return z;
 }
 
 

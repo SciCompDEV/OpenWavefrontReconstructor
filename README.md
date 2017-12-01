@@ -1,10 +1,11 @@
 
-# Open Wavefront Reconstructor: 1.0.0
+# Open Wavefront Reconstructor: `alfa`
+**Note: version 1.0.0 will be uploaded soon**
 
 
 ![Alt text](pics/OWR_a.png?raw=true "Title")
 
-**OWR** (Open Wavefront Reconstructor) is a library written in C++ with a high degree of configuration, and it is aimed to facilitate future research in the field of wafefront reconstruction, as well as to provide a ready-to-go framework for being used in control systems.
+**OWR** (Open Wavefront Reconstructor) is a library written in C++ and aimed to facilitate future research in the field of wafefront reconstruction, as well as to provide a ready-to-go framework for being used in control systems.
 
 The library contains the following capabilities:
 
