@@ -43,7 +43,8 @@ public:
         if(product == nullptr) {
             error_undefined("Reconstructor cannot be created");
         } else {
-            return std::move(product); // copy elision?
+            //return std::move(product); // copy elision?
+            return product; // copy elision?
         }
     } // END WaveFrontReconstructor
 };

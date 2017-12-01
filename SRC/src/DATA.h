@@ -11,10 +11,14 @@ private:
     //int nbr; // TODO: what is this number
 public:
     // User input field
-    std::vector<double> x, y, z, dx, dy;
+    std::vector<double> x,
+        y,
+        z,
+        dx,
+        dy;
 public:
     DATA(std::string _input_field): // TODO: Solano confirm nbr is not used
-         //int _nbr):
+        //int _nbr):
         //input_field(_input_field), nbr(_nbr) {
         input_field(_input_field) {
         LDATA = new CLogging((char*)"Log4cxxConfig.xml","DATA");
@@ -25,9 +29,11 @@ public:
          std::vector<double>& _z,
          std::vector<double>& _dx,
          std::vector<double>& _dy)  {
+        // getter/setter
+        input_field = "user";
         LDATA = new CLogging((char*)"Log4cxxConfig.xml","DATA");
         LDATA->INFO((char *)"Initializing wafefront DATA from external input_field");
-        // TODO: autocheck
+        // TODO: autocheck/sanitize
         x=_x;
         y=_y;
         z=_z;

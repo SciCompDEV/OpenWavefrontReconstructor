@@ -17,87 +17,99 @@ using std::ofstream;
 //Test-only class. Removed/replaced in user applications.
 // CONSTRUCTOR =================================================================
 MockWavefrontGenerator::MockWavefrontGenerator(unique_ptr<DATA> _data) {
-    data=move(_data);
-    data->x.clear();
-    data->y.clear();
-    data->z.clear();
-    data->dx.clear();
-    data->dy.clear();
-    onSquare=false;
-    rMin=0.0e0;
-    rMax=1.0e0;
-    int gridDim=30; //here 30 is used to form the 30x30 grid from which it selects points inside a circle
+    data=move(_data); // TODO: check this move
                     
-    if(data->getSource().compare("CircularTestF1")==0) {
-        cout << "Setting up Test F1 wavefront, circular." << endl;
-        GenerateTestF1WaveFront(gridDim);
-    } else if ( data->getSource().compare("CircularXYTilted")==0 ) {
-        cout << "Setting up Tilted (on X and Y) wavefront, circular." << endl;
-        GenerateXYTiltWaveFront(gridDim,0.5e0,0.2e0);
-    } else if ( data->getSource().compare("CircularCenteredGaussian")==0 ) {
-        cout << "Setting up a Centered Gaussian wavefront, circular." << endl;
-        GenerateGaussianWaveFront(gridDim,0.0e0,0.0e0,0.5e0);
-    } else if ( data->getSource().compare("CircularOffCenteredGaussian")==0 ) {
-        cout << "Setting up an Off-centered Gaussian wavefront, circular." << endl;
-        GenerateGaussianWaveFront(gridDim,0.1e0,0.3e0,0.6e0,0.6);
-    } else if ( data->getSource().compare("CircularDoubleOffCenteredGaussians")==0 ) {
-        cout << "Setting up Two off-centered Gaussians wavefront, circular." << endl;
-        GenerateCircularDoubleOffCenteredGaussians(gridDim,0.3e0,0.5e0,0.25e0,0.5e0,
-                -0.5e0,-0.3e0,0.10e0,0.3e0);
-    } else if ( data->getSource().compare("CircularSuperGaussian4")==0 ) {
-        cout << "Setting up a Super-Gaussian wavefront, circular, of order 4" << endl;
-        GenerateSuperGaussianWaveFront(gridDim,0.0e0,0.0e0,4,0.8e0,0.7e0);
-    } else if ( data->getSource().compare("CircularSuperGaussian6")==0 ) {
-        cout << "Setting up a Super-Gaussian wavefront, circular, of order 6" << endl;
-        GenerateSuperGaussianWaveFront(gridDim,0.0e0,0.0e0,6,0.6e0,0.5e0);
-    } else if ( data->getSource().compare("CircularSuperGaussian8")==0 ) {
-        cout << "Setting up a Super-Gaussian wavefront, circular, of order 8" << endl;
-        GenerateSuperGaussianWaveFront(gridDim,0.00e0,0.00e0,8,0.6e0,0.6e0);
-    } else if ( data->getSource().compare("SquareXYTilted")==0 ) {
-        cout << "Setting up Tilted (on X and Y) wavefront, square." << endl;
-        onSquare=true;
-        rMax=0.99e0;
-        GenerateXYTiltWaveFront(gridDim,0.5e0,0.2e0);
-    } else if ( data->getSource().compare("SquareTestF1")==0 ) {
-        cout << "Setting up a Test F1 wavefront, square." << endl;
-        onSquare=true;
-        rMax=0.99e0;
-        GenerateTestF1WaveFront(gridDim);
-    } else if ( data->getSource().compare("SquareCenteredGaussian")==0 ) {
-        cout << "Setting up a Centered Gaussian wavefront, square." << endl;
-        onSquare=true;
-        rMax=0.99e0;
-        GenerateGaussianWaveFront(gridDim,0.0e0,0.0e0,0.5e0);
-    } else if ( data->getSource().compare("SquareOffCenteredGaussian")==0 ) {
-        cout << "Setting up an Off-centered Gaussian wavefront, square." << endl;
-        onSquare=true;
-        rMax=0.99e0;
-        GenerateGaussianWaveFront(gridDim,0.1e0,0.3e0,0.6e0,0.6);
-    } else if ( data->getSource().compare("SquareDoubleOffCenteredGaussians")==0 ) {
-        cout << "Setting up Two off-centered Gaussians wavefront, square." << endl;
-        onSquare=true;
-        rMax=0.99e0;
-        GenerateCircularDoubleOffCenteredGaussians(gridDim,0.3e0,0.5e0,0.25e0,0.5e0,
-                -0.5e0,-0.3e0,0.10e0,0.3e0);
-    } else if ( data->getSource().compare("SquareSuperGaussian4")==0 ) {
-        cout << "Setting up a Super-Gaussian wavefront, square, of order 4" << endl;
-        onSquare=true;
-        rMax=0.99e0;
-        GenerateSuperGaussianWaveFront(gridDim,0.0e0,0.0e0,4,0.8e0,0.7e0);
-    } else if ( data->getSource().compare("SquareSuperGaussian6")==0 ) {
-        cout << "Setting up a Super-Gaussian wavefront, square, of order 6" << endl;
-        onSquare=true;
-        rMax=0.99e0;
-        GenerateSuperGaussianWaveFront(gridDim,0.0e0,0.0e0,6,0.6e0,0.5e0);
-    } else if ( data->getSource().compare("SquareSuperGaussian8")==0 ) {
-        cout << "Setting up a Super-Gaussian wavefront, square, of order 8" << endl;
-        onSquare=true;
-        rMax=0.99e0;
-        GenerateSuperGaussianWaveFront(gridDim,0.00e0,0.00e0,8,0.6e0,0.6e0);
-    } else {
-        cout << "Setting up the default xy tilted wavefront." << endl;
-        GenerateXYTiltWaveFront(gridDim,0.5e0,0.2e0);
-    }
+    // TODO: refactor to switch?
+    if(data->getSource().compare("user")==0) {
+        cout << "User input field." << endl;
+        // TODO: Solano what happen in this case?
+        //GenerateTestF1WaveFront(gridDim);
+
+    } else  {
+        data->x.clear();
+        data->y.clear();
+        data->z.clear();
+        data->dx.clear();
+        data->dy.clear();
+        onSquare=false;
+        rMin=0.0e0;
+        rMax=1.0e0;
+        int gridDim=30; //here 30 is used to form the 30x30 grid from which it selects points inside a circle
+    
+        if ( data->getSource().compare("CircularXYTilted")==0 ) {
+            cout << "Setting up Test F1 wavefront, circular." << endl;
+            GenerateTestF1WaveFront(gridDim);
+        } else if ( data->getSource().compare("CircularXYTilted")==0 ) {
+            cout << "Setting up Tilted (on X and Y) wavefront, circular." << endl;
+            GenerateXYTiltWaveFront(gridDim,0.5e0,0.2e0);
+        } else if ( data->getSource().compare("CircularCenteredGaussian")==0 ) {
+            cout << "Setting up a Centered Gaussian wavefront, circular." << endl;
+            GenerateGaussianWaveFront(gridDim,0.0e0,0.0e0,0.5e0);
+        } else if ( data->getSource().compare("CircularOffCenteredGaussian")==0 ) {
+            cout << "Setting up an Off-centered Gaussian wavefront, circular." << endl;
+            GenerateGaussianWaveFront(gridDim,0.1e0,0.3e0,0.6e0,0.6);
+        } else if ( data->getSource().compare("CircularDoubleOffCenteredGaussians")==0 ) {
+            cout << "Setting up Two off-centered Gaussians wavefront, circular." << endl;
+            GenerateCircularDoubleOffCenteredGaussians(gridDim,0.3e0,0.5e0,0.25e0,0.5e0,
+                    -0.5e0,-0.3e0,0.10e0,0.3e0);
+        } else if ( data->getSource().compare("CircularSuperGaussian4")==0 ) {
+            cout << "Setting up a Super-Gaussian wavefront, circular, of order 4" << endl;
+            GenerateSuperGaussianWaveFront(gridDim,0.0e0,0.0e0,4,0.8e0,0.7e0);
+        } else if ( data->getSource().compare("CircularSuperGaussian6")==0 ) {
+            cout << "Setting up a Super-Gaussian wavefront, circular, of order 6" << endl;
+            GenerateSuperGaussianWaveFront(gridDim,0.0e0,0.0e0,6,0.6e0,0.5e0);
+        } else if ( data->getSource().compare("CircularSuperGaussian8")==0 ) {
+            cout << "Setting up a Super-Gaussian wavefront, circular, of order 8" << endl;
+            GenerateSuperGaussianWaveFront(gridDim,0.00e0,0.00e0,8,0.6e0,0.6e0);
+        } else if ( data->getSource().compare("SquareXYTilted")==0 ) {
+            cout << "Setting up Tilted (on X and Y) wavefront, square." << endl;
+            onSquare=true;
+            rMax=0.99e0;
+            GenerateXYTiltWaveFront(gridDim,0.5e0,0.2e0);
+        } else if ( data->getSource().compare("SquareTestF1")==0 ) {
+            cout << "Setting up a Test F1 wavefront, square." << endl;
+            onSquare=true;
+            rMax=0.99e0;
+            GenerateTestF1WaveFront(gridDim);
+        } else if ( data->getSource().compare("SquareCenteredGaussian")==0 ) {
+            cout << "Setting up a Centered Gaussian wavefront, square." << endl;
+            onSquare=true;
+            rMax=0.99e0;
+            GenerateGaussianWaveFront(gridDim,0.0e0,0.0e0,0.5e0);
+        } else if ( data->getSource().compare("SquareOffCenteredGaussian")==0 ) {
+            cout << "Setting up an Off-centered Gaussian wavefront, square." << endl;
+            onSquare=true;
+            rMax=0.99e0;
+            GenerateGaussianWaveFront(gridDim,0.1e0,0.3e0,0.6e0,0.6);
+        } else if ( data->getSource().compare("SquareDoubleOffCenteredGaussians")==0 ) {
+            cout << "Setting up Two off-centered Gaussians wavefront, square." << endl;
+            onSquare=true;
+            rMax=0.99e0;
+            GenerateCircularDoubleOffCenteredGaussians(gridDim,0.3e0,0.5e0,0.25e0,0.5e0,
+                    -0.5e0,-0.3e0,0.10e0,0.3e0);
+        } else if ( data->getSource().compare("SquareSuperGaussian4")==0 ) {
+            cout << "Setting up a Super-Gaussian wavefront, square, of order 4" << endl;
+            onSquare=true;
+            rMax=0.99e0;
+            GenerateSuperGaussianWaveFront(gridDim,0.0e0,0.0e0,4,0.8e0,0.7e0);
+        } else if ( data->getSource().compare("SquareSuperGaussian6")==0 ) {
+            cout << "Setting up a Super-Gaussian wavefront, square, of order 6" << endl;
+            onSquare=true;
+            rMax=0.99e0;
+            GenerateSuperGaussianWaveFront(gridDim,0.0e0,0.0e0,6,0.6e0,0.5e0);
+        } else if ( data->getSource().compare("SquareSuperGaussian8")==0 ) {
+            cout << "Setting up a Super-Gaussian wavefront, square, of order 8" << endl;
+            onSquare=true;
+            rMax=0.99e0;
+            GenerateSuperGaussianWaveFront(gridDim,0.00e0,0.00e0,8,0.6e0,0.6e0);
+        } else {
+            cout << "Setting up the default xy tilted wavefront." << endl;
+            GenerateXYTiltWaveFront(gridDim,0.5e0,0.2e0);
+        }
+        
+    
+    } // end else
+
 }
 // =============================================================================
 // COORDINATES =================================================================

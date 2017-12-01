@@ -59,6 +59,7 @@ int main() {
         //std::vector<double> x, y, z, dx, dy;
         //unique_ptr<DATA> input_data(new DATA(x, y, z, dx, dz ));
         // Buiding reconstructor -----------------------------------------------
+        // MockWavefrontGenerator should return only the values in case DATA is a user input 
         auto reconstructor = CFactory::make(pl_basis, pl_order, new MockWavefrontGenerator(std::move(input_data)));
         // ---------------------------------------------------------------------
         // Testing zone (used for checking numerical procedure, please
@@ -68,6 +69,7 @@ int main() {
         // TODO: why do you need parsing the wf twice? here and in the factory#make?
         vector<double> zReconstructed = reconstructor->ComputeReconstructedWaveFront(reconstructor->data->x,reconstructor->data->y,reconstructor->_coeffs);
         cout << scientific << setprecision(10) << endl;
+        // TODO: encapsulate all this stuff
         cout << "NumberOfNodes: " << reconstructor->data->dx.size() << endl;
         cout << "CPUTimeSVD: " << reconstructor->GetCPUTimeMatrixGeneration() << endl;
         cout << "CPUTimePureSVD: " << reconstructor->GetCPUTimePureSVD() << endl;
