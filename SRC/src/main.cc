@@ -14,6 +14,7 @@
 #include "MockWavefrontGenerator.h"
 #include "CFactory.h"
 #include "CParser.h"
+#include "CParsening.h"
 #include "AuxiliaryTemporaryFunctions.h"
 // -----------------------------------------------------------------------------
 using namespace std;
@@ -22,45 +23,24 @@ CLogging MAIN((char*)"Log4cxxConfig.xml","MAIN");
 //int main(int argc, char** argv) {
 int main() {
     // TODO: CParsening parser;
-    bool exists;
     // TODO: Decouple Mock from the contructor of WaveFrontReconstructor.
     // The MockWavefrontGenerator is an independent class, which
     // should be chosen by the user, and it may be replaced
     // in runtime by the sensor's slopes retrieving function.
     //bool generate_only=true;
-    string ttt;
-    int pl_order;
-    string pl_basis;
-    string mock_type_wavefront;
     int ret =-1;
     try {
-        // Parsening data ------------------------------------------------------
-        // TODO: ifnoexist file
-        ConfigFile cfg("config.cfg");
-        exists = cfg.keyExists("libtype");
-        if(!exists)  error_arguments("libtype is missing");
-        std::string lib_type= cfg.getValueOfKey<std::string>("libtype", "armadillo");
-        //exists = cfg.keyExists("generate_only");
-        //if(!exists) {  error_arguments("genarate_only is missing"); generate_only = false; }
-        //ttt=cfg.getValueOfKey<std::string>("generate_only","false");
-        exists = cfg.keyExists("polynomialbasis");
-        if(!exists)  error_arguments("polynomialbasis is missing");
-        pl_basis= cfg.getValueOfKey<std::string>("polynomialbasis", "Zernike");
-        exists = cfg.keyExists("polynomialorder");
-        if(!exists)  error_arguments("polynomialorder is missing");
-        pl_order=cfg.getValueOfKey<int>("polynomialorder",10);
-        exists = cfg.keyExists("mock_type_wavefront");
-        if(!exists)  error_arguments("mock_type_wavefrontis missing");
-        mock_type_wavefront=cfg.getValueOfKey<string>("mock_type_wavefront","CircularTestF2");
+        CParsening parser("config.cfg"); // TODO: move class to static functions?
+        
         // Building data -------------------------------------------------------
-        unique_ptr<DATA> input_data(new DATA(mock_type_wavefront));
-        //unique_ptr<DATA> input_data(new DATA(mock_type_wavefront, 30));
+        unique_ptr<DATA> input_data(new DATA(parser.get_mock_type_wavefront()));
+        //unique_ptr<DATA> input_data(new DATA(parser.get_mock_type_wavefront(), 30));
         // OR:
         //std::vector<double> x, y, z, dx, dy;
         //unique_ptr<DATA> input_data(new DATA(x, y, z, dx, dz ));
         // Buiding reconstructor -----------------------------------------------
         // MockWavefrontGenerator should return only the values in case DATA is a user input 
-        auto reconstructor = CFactory::make(pl_basis, pl_order, new MockWavefrontGenerator(std::move(input_data)));
+        auto reconstructor = CFactory::make(parser.get_pl_basis(), parser.get_pl_order(), new MockWavefrontGenerator(std::move(input_data)));
         // ---------------------------------------------------------------------
         // Testing zone (used for checking numerical procedure, please
         // do not erase until numerical algorithms are fixed.
