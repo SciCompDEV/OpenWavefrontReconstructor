@@ -20,8 +20,13 @@ protected:
     vector<vector<double> > _VSU; /*!< The VSU matrix (see the main paper), used to recover coefficients of the
                                     wavefront expansion.  */
     bool haveMat;
-    double cpuTimeMatGen,cpuTimeRHSLSE,cpuTimeSimpleReconstruction;
-    double cpuTimeGenMatrixM,cpuTimeGenMatrixR,cpuTimePureSVD;
+    // TODO: documet this
+    double cpuTimeMatGen,
+           cpuTimeRHSLSE,
+           cpuTimeSimpleReconstruction,
+           cpuTimeGenMatrixM,
+           cpuTimeGenMatrixR,
+           cpuTimePureSVD;
     unique_ptr<CLogging> WFREC;
 
 public:
@@ -99,6 +104,9 @@ public:
     // -------------------------------------------------------------------------
     void PrintCoefficients(void);
     virtual string PolynomialType()=0;
+
+
+   virtual  void print_CPU_gathered_info();
 
 protected:
 

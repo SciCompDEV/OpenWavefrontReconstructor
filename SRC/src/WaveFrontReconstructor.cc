@@ -133,4 +133,19 @@ void WavefrontReconstructor::PrintCoefficients(void) {
     }
 }
 
+void WavefrontReconstructor::print_CPU_gathered_info(){ 
+
+        // TODO: move all this stuff to sringstream and pass to the logger
+
+        cout << scientific << setprecision(10) << endl;
+        cout << "NumberOfNodes: " << data->dx.size() << endl;
+        cout << "CPUTimeSVD: " << GetCPUTimeMatrixGeneration() << endl;
+        cout << "CPUTimePureSVD: " << GetCPUTimePureSVD() << endl;
+        cout << "CPUTimeGenMatrixM: " << GetCPUTimeGenerationOfMatrixM() << endl;
+        cout << "CPUTimeGenMatrixR: " << GetCPUTimeGenerationOfMatrixR() << endl;
+        cout << "SingleCPUTimeVSUGProduct: " << GetCPUTimeCoefficientEstimation() << endl;
+        cout << "SingleCPUTimeRAProduct: " << GetCPUTimeSimpleReconstruction() << endl;
+
+}
+
 // =============================================================================

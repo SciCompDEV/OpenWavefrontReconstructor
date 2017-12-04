@@ -113,8 +113,8 @@ void AuxiliaryTemporaryFunctions::SaveComparedData3D(vector<double> &xx,vector<d
    }
    dfil.close();
 }
-void AuxiliaryTemporaryFunctions::SaveDiffData2D(const vector<double> &xx,const vector<double> &yy,\
-        const vector<double> &zor,const vector<double> &zrec,string fileName) {
+// TODO: Solano some unusued parameters: yy
+void AuxiliaryTemporaryFunctions::SaveDiffData2D(const vector<double> &xx,const vector<double> &yy, const vector<double> &zor,const vector<double> &zrec,string fileName) {
     ofstream dfil(fileName.c_str());
     int nn=xx.size();
     int idx=0;
@@ -166,5 +166,22 @@ void AuxiliaryTemporaryFunctions::MakePlot2DGnuplot(string gnuplotYLabel,string 
     cmd+="' u 1:2 w l lw 2 notitle\"";
     system(cmd.c_str());
 }
-#endif  /* _AUXILIARYTEMPORARYFUNCTIONS_CC_ */
+
+void AuxiliaryTemporaryFunctions::SaveData3D_gathered(vector<double>& x,
+        vector<double>& y,
+        vector<double>& z,
+        vector<double>& zreconstructed,
+        string generated,
+        string reconstructed,
+        string difference,
+        string error) {
+
+        SaveData3D(x,y,z, generated);
+        SaveData3D(x,y,zreconstructed, reconstructed);
+        SaveComparedData3D(x,y,z, zreconstructed, difference);
+        SaveDiffData2D(x,y,z,zreconstructed, error);
+
+}
+
+#endif 
 
