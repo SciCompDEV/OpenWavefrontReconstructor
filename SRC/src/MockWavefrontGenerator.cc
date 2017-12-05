@@ -17,6 +17,7 @@ using std::ofstream;
 //Test-only class. Removed/replaced in user applications.
 // CONSTRUCTOR =================================================================
 MockWavefrontGenerator::MockWavefrontGenerator(unique_ptr<DATA> _data) {
+
     data=move(_data); // TODO: check this move
                     
     // TODO: refactor to switch?

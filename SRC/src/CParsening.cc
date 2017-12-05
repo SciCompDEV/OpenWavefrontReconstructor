@@ -39,7 +39,7 @@ int  CParsening::get_pl_order() {
 std::string CParsening::get_mock_type_wavefront() {
 
         exists = cfg->keyExists("mock_type_wavefront");
-        if(!exists)  error_arguments("mock_type_wavefrontis missing");
+        if(!exists)  error_arguments("mock_type_wavefront is missing");
         return cfg->getValueOfKey<string>("mock_type_wavefront","CircularTestF2");
 
 }

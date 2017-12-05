@@ -183,5 +183,26 @@ void AuxiliaryTemporaryFunctions::SaveData3D_gathered(vector<double>& x,
 
 }
 
+
+
+// TODO: cout -> loggin
+void AuxiliaryTemporaryFunctions::print_simu_param_gather(double _sumtot, 
+        double _sumres, 
+        vector<double>& _z,
+        vector<double>& zreconstructed,
+        string _PolynomialType, 
+        int _PolynomialOrder,
+        int _NumberOfPolynomialTerms) {
+
+        cout << std::scientific << std::setprecision(12);
+        cout << "CoefficientOfDetermination: " << GetCoefficientOfDetermination(_z, zreconstructed, _sumtot, _sumres) << endl;
+        cout << "NormalizedRMS: " << GetNormalizedRMS(_z, zreconstructed) << endl;
+        cout << "PolynomialType: " << _PolynomialType << endl;
+        cout << "PolynomialOrder: " << _PolynomialOrder << endl;
+        cout << "NumberOfPolynomialTerms: " << _NumberOfPolynomialTerms << endl;
+
+}
+
+
 #endif 
 
