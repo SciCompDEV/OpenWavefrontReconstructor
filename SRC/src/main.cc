@@ -22,16 +22,13 @@ int main() {
     try {
         CParsening parser("config.cfg"); // TODO: move class to static functions?
         
-        // Building data -------------------------------------------------------
         unique_ptr<DATA> input_data(new DATA(parser.get_mock_type_wavefront())); // TODO: confirm the 30 is not neccesary anymore
         // OR:
         //std::vector<double> x, y, z, dx, dy;
         //unique_ptr<DATA> input_data(new DATA(x, y, z, dx, dz )); // TODO: check if  thi sis correct:in runtime by the sensor's slopes retrieving function.
         
-        // Buiding reconstructor -----------------------------------------------
         auto reconstructor = CFactory::make(parser.get_pl_basis(), parser.get_pl_order(), new MockWavefrontGenerator(std::move(input_data)));
 
-        // ---------------------------------------------------------------------
         MAIN.INFO((char *)"Computing image reconstruction...");
         // TODO: compute instead of ComputeReconstructedWaveFront
         // TODO: why do you need parsing the wf twice? here and in the factory#make?
@@ -50,17 +47,19 @@ int main() {
                 "reconstructed.tsv", 
                 "difference.tsv", 
                 "error.dat"); 
-        // ---------------------------------------------------------------------
+
         MAIN.DEB((char *)"Finished Saving...");
 
+
         double sumtot,sumres;
-        // TODO: the scientific has to be encapsulted in reconstructor + encapsulte + parse as an option
-        cout << std::scientific << std::setprecision(12);
-        cout << "CoefficientOfDetermination: " << AuxiliaryTemporaryFunctions::GetCoefficientOfDetermination(reconstructor->data->z,zReconstructed,sumtot,sumres) << endl;
-        cout << "NormalizedRMS: " << AuxiliaryTemporaryFunctions::GetNormalizedRMS(reconstructor->data->z,zReconstructed) << endl;
-        cout << "PolynomialType: " << reconstructor->PolynomialType() << endl;
-        cout << "PolynomialOrder: " << reconstructor->PolynomialOrder() << endl;
-        cout << "NumberOfPolynomialTerms: " << reconstructor->NumberOfPolynomialTerms() << endl;
+        AuxiliaryTemporaryFunctions::print_simu_param_gather(sumtot, 
+                sumres, 
+                reconstructor->data->z, 
+                zReconstructed,
+                reconstructor->PolynomialType(),
+                reconstructor->PolynomialOrder(),
+                reconstructor->NumberOfPolynomialTerms() );
+
         // TODO: encapsulate in higher function + parse as an option
         AuxiliaryTemporaryFunctions::MakePlot3DGnuplot(string("wf"),string("generated"),string("generated.tsv"),string("generated.pdf"));
         AuxiliaryTemporaryFunctions::MakePlot3DGnuplot(string("wf"),string("reconstructed"),string("reconstructed.tsv"),string("reconstructed.pdf"));

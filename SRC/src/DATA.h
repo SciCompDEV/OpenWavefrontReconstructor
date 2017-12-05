@@ -8,7 +8,6 @@ struct DATA {
 private:
     CLogging* LDATA;
     std::string input_field; // input_field name of data: mock_wave_front vs external_stream
-    //int nbr; // TODO: what is this number
 public:
     // User input field
     std::vector<double> x,
@@ -17,9 +16,7 @@ public:
         dx,
         dy;
 public:
-    DATA(std::string _input_field): // TODO: Solano confirm nbr is not used
-        //int _nbr):
-        //input_field(_input_field), nbr(_nbr) {
+    DATA(std::string _input_field): 
         input_field(_input_field) {
         LDATA = new CLogging((char*)"Log4cxxConfig.xml","DATA");
         LDATA->INFO((char *)"Initializing wavefront DATA from mockup");
