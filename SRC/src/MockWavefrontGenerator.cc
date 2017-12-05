@@ -37,7 +37,7 @@ MockWavefrontGenerator::MockWavefrontGenerator(unique_ptr<DATA> _data) {
         rMax=1.0e0;
         int gridDim=30; //here 30 is used to form the 30x30 grid from which it selects points inside a circle
     
-        if ( data->getSource().compare("CircularXYTilted")==0 ) {
+        if ( data->getSource().compare("CircularTestF1")==0 ) {
             cout << "Setting up Test F1 wavefront, circular." << endl;
             GenerateTestF1WaveFront(gridDim);
         } else if ( data->getSource().compare("CircularXYTilted")==0 ) {
