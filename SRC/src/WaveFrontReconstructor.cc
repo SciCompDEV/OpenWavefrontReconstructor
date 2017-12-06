@@ -71,19 +71,21 @@ void WavefrontReconstructor::CenterWavefrontAlongZ(vector<double> &zz) {
 void WavefrontReconstructor::SetSlopes(const vector<double> &_dx, const vector<double> &_dy) {
     size_t nn=_dx.size();
     if ( _dx.size() !=_dy.size() ) {
+    // TODO: user error class
        cout << "Error: gradient arrays have different sizes!" << endl;
        cout << __FILE__ << ", line: " << __LINE__ << endl;
     }
     if ( _slopes.size()!=(2*nn) ) {
         _slopes.resize(2*nn);
     }
+    // TODO: one single array why?
     for ( size_t i=0 ; i<nn ; ++i ) { _slopes[i]=_dx[i]; }
     for ( size_t i=0 ; i<nn ; ++i ) { _slopes[nn+i]=_dy[i]; }
 }
 
 void WavefrontReconstructor::ComputeCoefficients(void) {
    if ( linalg!=NULL ) {
-       _coeffs=linalg->MatrixDotVector(_VSU,_slopes);
+       _coeffs=linalg->MatrixDotVector(_VSU,_slopes); // TODO Alejandro the optimization
    } else {
     cout << "No linear algebra library has been chosen!" << endl;
     cout << __FILE__ << ", line: " << __LINE__ << endl;

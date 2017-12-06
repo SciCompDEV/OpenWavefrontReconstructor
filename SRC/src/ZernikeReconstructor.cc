@@ -32,7 +32,6 @@ void ZernikeReconstructor::FindWaveFrontCoefficientsFromCoordinatesAndSlopes(con
                                     //and J is the total number of polynomials that
                                     //forms a closed shell. J=(n+1)*(n+2)/2 (for 
                                     //Zernike Polynomials).
-
     SetSlopes(data->dx,data->dy);
 
     // TODO: reimplement timing, or change by runtime profiling
