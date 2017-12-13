@@ -51,6 +51,7 @@ int main() {
         MAIN.DEB((char *)"Finished Saving...");
 
 
+        // TODO: Solano sumtot, and sumres are not used!
         double sumtot,sumres;
         AuxiliaryTemporaryFunctions::print_simu_param_gather(sumtot, 
                 sumres, 
@@ -66,11 +67,14 @@ int main() {
         AuxiliaryTemporaryFunctions::MakePlot3DGnuplot(string("wf"),string("difference"),string("difference.tsv"),string("difference.pdf"));
         AuxiliaryTemporaryFunctions::MakePlot2DGnuplot(string("error [perc.]"),string("error"),string("error.dat"),string("error.pdf"));
         MAIN.DEB((char *)"Finished plotting.");
+        
         MAIN.DEB((char *)"Starting RA and VSUG products loop...");
         double cpuRATime=0.0e0,cpuVSUGTime=0.0e0;
-        int III=10;
+        int III=10; // TODO why 10??
         for ( int i=0 ; i<III ; ++i ) {
-            reconstructor->SetSlopes(reconstructor->data->dx,reconstructor->data->dy);
+            // TODO Solano WavefrontReconstructor should have a DATA object.There is no point at passing reconstructor->data->dx
+            // to the reconstructor itself
+            reconstructor->Setslopes(reconstructor->data->dx,reconstructor->data->dy);
             reconstructor->ComputeCoefficients();
             zReconstructed = reconstructor->ComputeReconstructedWaveFront(reconstructor->data->x,reconstructor->data->y,reconstructor->_coeffs);
             cpuVSUGTime+=reconstructor->GetCPUTimeCoefficientEstimation();
