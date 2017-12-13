@@ -32,7 +32,7 @@ int main() {
         MAIN.INFO((char *)"Computing image reconstruction...");
         // TODO: compute instead of ComputeReconstructedWaveFront
         // TODO: why do you need parsing the wf twice? here and in the factory#make?
-        vector<double> zReconstructed = reconstructor->ComputeReconstructedWaveFront(reconstructor->data->x,reconstructor->data->y,reconstructor->_coeffs);
+        vector<double> zReconstructed = reconstructor->ComputeReconstructedWaveFront();
 
         reconstructor->print_CPU_gathered_info();
 
@@ -87,10 +87,13 @@ int main() {
             // generator, and are saved in the data object. However, the mock
             // should be decoupled from the reconstructor, and again, the
             // user should be able to update as many times as he needs the
-            // slopes. So the slopes need to be passed.
+            // slopes. So the slopes need to be passed. In the call below
+            // reconstructor->data->dx/dy must be replaced by custom
+            // dx/dy. These should be obtained elsewhere, for instance
+            // from a wavefront sensor.
             reconstructor->SetSlopes(reconstructor->data->dx,reconstructor->data->dy);
             reconstructor->ComputeCoefficients();
-            zReconstructed = reconstructor->ComputeReconstructedWaveFront(reconstructor->data->x,reconstructor->data->y,reconstructor->_coeffs);
+            zReconstructed = reconstructor->ComputeReconstructedWaveFront();
             cpuVSUGTime+=reconstructor->GetCPUTimeCoefficientEstimation();
             cpuRATime+=reconstructor->GetCPUTimeSimpleReconstruction();
         }
