@@ -74,7 +74,7 @@ int main() {
         for ( int i=0 ; i<III ; ++i ) {
             // TODO Solano WavefrontReconstructor should have a DATA object.There is no point at passing reconstructor->data->dx
             // to the reconstructor itself
-            reconstructor->Setslopes(reconstructor->data->dx,reconstructor->data->dy);
+            reconstructor->SetSlopes(reconstructor->data->dx,reconstructor->data->dy);
             reconstructor->ComputeCoefficients();
             zReconstructed = reconstructor->ComputeReconstructedWaveFront(reconstructor->data->x,reconstructor->data->y,reconstructor->_coeffs);
             cpuVSUGTime+=reconstructor->GetCPUTimeCoefficientEstimation();
