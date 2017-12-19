@@ -113,10 +113,9 @@ void AuxiliaryTemporaryFunctions::SaveComparedData3D(vector<double> &xx,vector<d
    }
    dfil.close();
 }
-// TODO: Solano some unusued parameters: yy
-void AuxiliaryTemporaryFunctions::SaveDiffData2D(const vector<double> &xx,const vector<double> &yy, const vector<double> &zor,const vector<double> &zrec,string fileName) {
+void AuxiliaryTemporaryFunctions::SaveDiffData2D(const vector<double> &zor,const vector<double> &zrec,string fileName) {
     ofstream dfil(fileName.c_str());
-    int nn=xx.size();
+    int nn=zor.size();
     int idx=0;
     double err;
     for ( int i=0 ; i<nn ; ++i ) {
@@ -179,15 +178,14 @@ void AuxiliaryTemporaryFunctions::SaveData3D_gathered(vector<double>& x,
         SaveData3D(x,y,z, generated);
         SaveData3D(x,y,zreconstructed, reconstructed);
         SaveComparedData3D(x,y,z, zreconstructed, difference);
-        SaveDiffData2D(x,y,z,zreconstructed, error);
+        SaveDiffData2D(z,zreconstructed, error);
 
 }
 
 
 
 // TODO: cout -> loggin
-void AuxiliaryTemporaryFunctions::print_simu_param_gather(double _sumtot, 
-        double _sumres, 
+void AuxiliaryTemporaryFunctions::print_simu_param_gather(
         vector<double>& _z,
         vector<double>& zreconstructed,
         string _PolynomialType, 
@@ -195,7 +193,7 @@ void AuxiliaryTemporaryFunctions::print_simu_param_gather(double _sumtot,
         int _NumberOfPolynomialTerms) {
 
         cout << std::scientific << std::setprecision(12);
-        cout << "CoefficientOfDetermination: " << GetCoefficientOfDetermination(_z, zreconstructed, _sumtot, _sumres) << endl;
+        cout << "CoefficientOfDetermination: " << GetCoefficientOfDetermination(_z, zreconstructed) << endl;
         cout << "NormalizedRMS: " << GetNormalizedRMS(_z, zreconstructed) << endl;
         cout << "PolynomialType: " << _PolynomialType << endl;
         cout << "PolynomialOrder: " << _PolynomialOrder << endl;

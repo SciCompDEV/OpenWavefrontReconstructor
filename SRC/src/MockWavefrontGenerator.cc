@@ -24,6 +24,13 @@ MockWavefrontGenerator::MockWavefrontGenerator(unique_ptr<DATA> _data) {
     if(data->getSource().compare("user")==0) {
         cout << "User input field." << endl;
         // TODO: Solano what happen in this case?
+        // RE: Do not know. Since in the current version
+        // the mock is coupled to the reconstructor,
+        // I did not know what to do in this case,
+        // other than leave it undefined, with the warning to
+        // the screen.
+        // When the mock is decoupled, this should go.
+        // I did not put this if/else construction.
         //GenerateTestF1WaveFront(gridDim);
 
     } else  {

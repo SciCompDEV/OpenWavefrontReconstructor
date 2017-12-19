@@ -93,13 +93,13 @@ void WavefrontReconstructor::ComputeCoefficients(void) {
 }
 
 // TODO: short description ...
-vector<double> WavefrontReconstructor::ComputeReconstructedWaveFront(const vector<double> &x, const vector<double> &y,const vector<double> &coeffs) {
+vector<double> WavefrontReconstructor::ComputeReconstructedWaveFront() {
     vector<double> z; // TODO: this as a class member, to void continuous creation
     // TODO: reimplement timing, or change by runtime profiling
     clock_t c_init,c_end;
     c_init=clock();
-    size_t nn=x.size();
-    if ( (nn)!=(y.size()) ) {
+    size_t nn=data->x.size();
+    if ( (nn)!=(data->y.size()) ) {
         cout << "Error: arrays x and y are of different sizes!!" << endl
              << "File: " << __FILE__ << ", line: " << __LINE__ << endl;
     }

@@ -55,10 +55,7 @@ public:
     // Makes the reconstruction using the data contained in _coeffs: will compute the wavefront (and will store the results in "z"
     // Assumes that the estimation of the coefficients was performed before calling it 
     // (the estimation is called by FindWaveFrontCoefficientsFromCoordinatesAndSlopes). 
-    virtual vector<double> ComputeReconstructedWaveFront(
-            const vector<double> &x,
-            const vector<double> &y,
-            const vector<double> &coeffs);
+    virtual vector<double> ComputeReconstructedWaveFront(void);
 
     // -------------------------------------------------------------------------
     // The algorithm is in essence an integration -> the wavefront is determined up to an arbitrary constant. 

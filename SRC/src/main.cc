@@ -32,11 +32,18 @@ int main() {
         MAIN.INFO((char *)"Computing image reconstruction...");
         // TODO: compute instead of ComputeReconstructedWaveFront
         // TODO: why do you need parsing the wf twice? here and in the factory#make?
-        vector<double> zReconstructed = reconstructor->ComputeReconstructedWaveFront(reconstructor->data->x,reconstructor->data->y,reconstructor->_coeffs);
+        vector<double> zReconstructed = reconstructor->ComputeReconstructedWaveFront();
 
         reconstructor->print_CPU_gathered_info();
 
         // TODO: Solano, i want to move the args to a return value, why are calling this function twice?
+        // RE: It is called twice because it is acting on two different vectors.
+        // CenterWavefrontAlongZ is a function that DO SOMETHING to the argument: It translates
+        // the whole vector in such a manner that the final data is centered at the
+        // average value of the surface.  The average of the surface is computed
+        // from the same argument.
+        // I did not really know how to do this operation, so I preferred to
+        // use the non fancy approach.
         reconstructor->CenterWavefrontAlongZ(reconstructor->data->z);
         reconstructor->CenterWavefrontAlongZ(zReconstructed); // TODO: Move this as a return values
 
@@ -51,10 +58,7 @@ int main() {
         MAIN.DEB((char *)"Finished Saving...");
 
 
-        // TODO: Solano sumtot, and sumres are not used!
-        double sumtot,sumres;
-        AuxiliaryTemporaryFunctions::print_simu_param_gather(sumtot, 
-                sumres, 
+        AuxiliaryTemporaryFunctions::print_simu_param_gather(
                 reconstructor->data->z, 
                 zReconstructed,
                 reconstructor->PolynomialType(),
@@ -71,12 +75,25 @@ int main() {
         MAIN.DEB((char *)"Starting RA and VSUG products loop...");
         double cpuRATime=0.0e0,cpuVSUGTime=0.0e0;
         int III=10; // TODO why 10??
+                    // No real reason, just a number. Since these are tests,
+                    // it can be changed, although 10 is as good as any other number.
         for ( int i=0 ; i<III ; ++i ) {
-            // TODO Solano WavefrontReconstructor should have a DATA object.There is no point at passing reconstructor->data->dx
+            // TODO Solano WavefrontReconstructor should have a DATA object.
+            // There is no point at passing reconstructor->data->dx
             // to the reconstructor itself
+            // RE: There is a point. When the user passes his own slopes (more than once
+            // in runtime, the slopes need be updated).
+            // In the current version, the slopes are generated in the Mockwavefront
+            // generator, and are saved in the data object. However, the mock
+            // should be decoupled from the reconstructor, and again, the
+            // user should be able to update as many times as he needs the
+            // slopes. So the slopes need to be passed. In the call below
+            // reconstructor->data->dx/dy must be replaced by custom
+            // dx/dy. These should be obtained elsewhere, for instance
+            // from a wavefront sensor.
             reconstructor->SetSlopes(reconstructor->data->dx,reconstructor->data->dy);
             reconstructor->ComputeCoefficients();
-            zReconstructed = reconstructor->ComputeReconstructedWaveFront(reconstructor->data->x,reconstructor->data->y,reconstructor->_coeffs);
+            zReconstructed = reconstructor->ComputeReconstructedWaveFront();
             cpuVSUGTime+=reconstructor->GetCPUTimeCoefficientEstimation();
             cpuRATime+=reconstructor->GetCPUTimeSimpleReconstruction();
         }
